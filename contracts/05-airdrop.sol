@@ -87,6 +87,9 @@ contract Airdrop  {
     // Kill
     function kill() public isOwner {
         //TODO: Need Implementation
+        
+    // Transfer Eth to owner and terminate contract
+    selfdestruct(owner);
     }
     
     
