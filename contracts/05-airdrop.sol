@@ -41,7 +41,7 @@ contract Airdrop  {
 
     // Constructor
     constructor(address token) {
-        owner = msg.sender;
+        owner  = payable(msg.sender);
         tokenAddress = token;
         contractState = Status.PAUSED;
     }
@@ -76,46 +76,26 @@ contract Airdrop  {
 
 
     // Private Functions
-//correção
- /* function hasSubscribed(address subscriber) private returns(bool) {
-        
+
+    
+
+  
+    
+  
+    function hasSubscribed(address subscriber) private returns(bool) {
         require(signedAddress[subscriber].alreadyRegistered == false, "Addresses already registered");
         signedAddress[subscriber].alreadyRegistered = true;
 
         return false;
+
+         
     }
 
+
     // Kill
-    function kill() public isOwner {
+    function kill() public payable isOwner {
         contractState = Status.CANCELLED;
-        selfdestruct(owner); 
+        selfdestruct(payable(owner)); 
         
     }
-  */
-
-    function hasSubscribed(address subscriber) private returns(bool) {
-        //TODO: Need Implementation
-        uint i =0;
-        bool found = false;
-         while( i < subscribers.length) {
-             subscribers[i] == subscriber? found = true: found =false;
-             if(found == true ){
-                 break;
-             }
-             i++;
-         }     
-
-         return found;
-    }
-
-//require(signedAddres[subs].alreadyreg
-    // Kill
-    function kill(address payable _to) public  isOwner {
-        //TODO: Need Implementation
-        // Transfer Eth to owner and terminate contract
-        require(msg.sender == owner, "You are not the owner");
-        selfdestruct(_to);
-    }
-    
-    
 }
