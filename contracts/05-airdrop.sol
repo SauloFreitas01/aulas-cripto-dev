@@ -18,10 +18,17 @@ contract Airdrop  {
 
 
     // Properties
-    address private owner;
+    address  private  owner ;
     address public tokenAddress;
     address[] private subscribers;
     Status contractState; 
+
+    struct Subscriber{
+        bool  alreadyRegistered; 
+       
+    }
+
+    mapping(address => Subscriber) public signedAddress; //endereços inscritos
 
     // Modifiers
     modifier isOwner() {
@@ -69,6 +76,23 @@ contract Airdrop  {
 
 
     // Private Functions
+//correção
+ /* function hasSubscribed(address subscriber) private returns(bool) {
+        
+        require(signedAddress[subscriber].alreadyRegistered == false, "Addresses already registered");
+        signedAddress[subscriber].alreadyRegistered = true;
+
+        return false;
+    }
+
+    // Kill
+    function kill() public isOwner {
+        contractState = Status.CANCELLED;
+        selfdestruct(owner); 
+        
+    }
+  */
+
     function hasSubscribed(address subscriber) private returns(bool) {
         //TODO: Need Implementation
         uint i =0;
@@ -84,12 +108,13 @@ contract Airdrop  {
          return found;
     }
 
+//require(signedAddres[subs].alreadyreg
     // Kill
-    function kill() public isOwner {
+    function kill(address payable _to) public  isOwner {
         //TODO: Need Implementation
-    // Transfer Eth to owner and terminate contract
-    require(msg.sender == owner);
-      selfdestruct(msg.sender);
+        // Transfer Eth to owner and terminate contract
+        require(msg.sender == owner, "You are not the owner");
+        selfdestruct(_to);
     }
     
     
